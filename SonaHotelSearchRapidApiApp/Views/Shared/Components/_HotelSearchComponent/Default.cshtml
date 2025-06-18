@@ -1,7 +1,4 @@
-﻿
-@*
-    _HotelSearchComponent
-*@
+﻿@* _HotelSearchComponent *@
 
 <section class="hero-section">
     <div class="container">
@@ -10,7 +7,7 @@
                 <div class="hero-text">
                     <h1>Sona Otel Arama</h1>
                     <p>
-                        Yüzlerce otel arasından ihtiyaçlarınıza en uygun olanını bulun. Uygun fiyatlarla, kolay rezervasyon.
+                        Yüzlerce otel arasından ihtiyacınıza en uygun olanı kolayca bulun. Uygun fiyatlarla rezervasyon yapın.
                     </p>
                     <a href="#" class="primary-btn">Hemen Keşfet</a>
                 </div>
@@ -18,29 +15,30 @@
             <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                 <div class="booking-form">
                     <h3>Otel Rezervasyonu</h3>
-                    <form action="#">
+                    <form asp-controller="Home" asp-action="Hotels" method="post">
                         <div class="check-date">
                             <label for="date-in">Giriş Tarihi:</label>
-                            <input type="text" class="date-input" id="date-in">
-                            <i class="icon_calendar"></i>
+                            <input type="date" id="date-in" name="checkIn" class="form-control" required>
                         </div>
                         <div class="check-date">
                             <label for="date-out">Çıkış Tarihi:</label>
-                            <input type="text" class="date-input" id="date-out">
-                            <i class="icon_calendar"></i>
+                            <input type="date" id="date-out" name="checkOut" class="form-control" required>
                         </div>
                         <div class="select-option">
                             <label for="guest">Misafir Sayısı:</label>
-                            <select id="guest">
-                                <option value="">2 Yetişkin</option>
-                                <option value="">3 Yetişkin</option>
+                            <select id="guest" name="adults" required>
+                                <option value="1">1 Yetişkin</option>
+                                <option value="2" selected>2 Yetişkin</option>
+                                <option value="3">3 Yetişkin</option>
+                                <option value="4">4 Yetişkin</option>
                             </select>
                         </div>
                         <div class="select-option">
                             <label for="room">Oda Sayısı:</label>
-                            <select id="room">
-                                <option value="">1 Oda</option>
-                                <option value="">2 Oda</option>
+                            <select id="room" name="roomQty" required>
+                                <option value="1" selected>1 Oda</option>
+                                <option value="2">2 Oda</option>
+                                <option value="3">3 Oda</option>
                             </select>
                         </div>
                         <button type="submit">Otel Ara</button>

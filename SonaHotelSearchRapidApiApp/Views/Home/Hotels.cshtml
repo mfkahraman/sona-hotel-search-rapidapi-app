@@ -1,17 +1,20 @@
-﻿@{
+﻿@using static SonaHotelSearchRapidApiApp.Models.HotelSearchResponseModel
+@model List<Hotel>
+
+@{
     Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Sona Otel Arama">
-    <meta name="keywords" content="Sona, otel, rezervasyon, arama">
+    <meta name="description" content="Sona Template">
+    <meta name="keywords" content="Sona, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sona Otel Arama</title>
+    <title>Hotels</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
@@ -31,13 +34,15 @@
 </head>
 
 <body>
-    <!-- Sayfa Yükleniyor -->
+    <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
 
-    <!-- Header Başlangıç -->
-    <header class="header-section">
+
+    <!-- Header Section Begin -->
+    <header class="header-section header-normal">
+
         <div class="menu-item">
             <div class="container">
                 <div class="row">
@@ -52,18 +57,9 @@
                         <div class="nav-menu">
                             <nav class="mainmenu">
                                 <ul>
-                                    <li class="active"><a href="/Home/Index">Anasayfa</a></li>
-                                    <li><a href="/Home/Hotels">Oteller</a></li>
+                                    <li><a href="/Home/Index">Home</a></li>
+                                    <li class="active"><a href="/Home/Hotels">Hoteller</a></li>
                                     <li><a href="./about-us.html">Hakkımızda</a></li>
-                                    <li>
-                                        <a href="./pages.html">Sayfalar</a>
-                                        <ul class="dropdown">
-                                            <li><a href="./room-details.html">Otel Detay</a></li>
-                                            <li><a href="#">Aile Odası</a></li>
-                                            <li><a href="#">Lüks Oda</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="./blog.html">Haberler</a></li>
                                     <li><a href="./contact.html">İletişim</a></li>
                                 </ul>
                             </nav>
@@ -76,13 +72,75 @@
             </div>
         </div>
     </header>
-    <!-- Header Bitiş -->
+    <!-- Header End -->
+    <!-- Breadcrumb Section Begin -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Hotels</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section End -->
+    <!-- Rooms Section Begin -->
+    <section class="rooms-section spad">
+        <div class="container">
+            <div class="row">
 
-    <!-- Hero Bölümü Başlangıç -->
-    @await Component.InvokeAsync("_HotelSearchComponent")
-    <!-- Hero Bölümü Bitiş -->
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        var property = item.property;
 
-    <!-- Footer Başlangıç -->
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="room-item">
+                                <img src="@property.photoUrls?.FirstOrDefault()" alt="@property.name" style="height:250px; object-fit:cover;">
+                                <div class="ri-text">
+                                    <h4>@property.name</h4>
+                                    <h3>
+                                        @property.priceBreakdown?.grossPrice?.value.ToString("0.##") @property.priceBreakdown?.grossPrice?.currency
+                                        <span>/gece</span>
+                                    </h3>
+                                    <table>
+                                        <tr>
+                                            <td class="r-o">Puan:</td>
+                                            <td>
+                                                @(property.reviewScore > 0 ? property.reviewScore.ToString("0.0") + " / 10" : "Henüz Puan Yok")
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="r-o">Yorum Sayısı:</td>
+                                            <td>@property.reviewCount</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="r-o">Konum:</td>
+                                            <td>@property.wishlistName</td>
+                                        </tr>
+                                    </table>
+                                    <a href="#" class="primary-btn">Detaylar</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                else
+                {
+                    <div class="col-lg-12 text-center">
+                        <p>Uygun otel bulunamadı. Lütfen arama kriterlerinizi değiştirin.</p>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+    <!-- Rooms Section End -->
+    <!-- Footer Section Begin -->
     <footer class="footer-section">
         <div class="container">
             <div class="footer-text">
@@ -94,7 +152,7 @@
                                     <img src="~/sona-master/img/footer-logo.png" alt="">
                                 </a>
                             </div>
-                            <p>90'dan fazla yerel sitede milyonlarca gezgine ilham veriyoruz ve ulaşıyoruz</p>
+                            <p>We inspire and reach millions of travelers<br /> across 90 local websites</p>
                             <div class="fa-social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -106,20 +164,20 @@
                     </div>
                     <div class="col-lg-3 offset-lg-1">
                         <div class="ft-contact">
-                            <h6>Bize Ulaşın</h6>
+                            <h6>Contact Us</h6>
                             <ul>
-                                <li>(212) 123 4567</li>
-                                <li>info@sonaotel.com</li>
-                                <li>Taksim Mah. No: 23, İstanbul, Türkiye</li>
+                                <li>(12) 345 67890</li>
+                                <li>info.colorlib@gmail.com</li>
+                                <li>856 Cordia Extension Apt. 356, Lake, United State</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-3 offset-lg-1">
                         <div class="ft-newslatter">
-                            <h6>Güncellemeler</h6>
-                            <p>Son kampanya ve duyurulardan haberdar olun.</p>
+                            <h6>New latest</h6>
+                            <p>Get the latest updates and offers.</p>
                             <form action="#" class="fn-form">
-                                <input type="text" placeholder="E-posta">
+                                <input type="text" placeholder="Email">
                                 <button type="submit"><i class="fa fa-send"></i></button>
                             </form>
                         </div>
@@ -132,16 +190,18 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <ul>
-                            <li><a href="#">İletişim</a></li>
-                            <li><a href="#">Kullanım Koşulları</a></li>
-                            <li><a href="#">Gizlilik</a></li>
-                            <li><a href="#">Çevre Politikaları</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Environmental Policy</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-5">
                         <div class="co-text">
                             <p>
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tüm hakları saklıdır | Bu şablon <i class="fa fa-heart" aria-hidden="true"></i> ile tasarlandı <a href="https://colorlib.com" target="_blank">Colorlib</a> tarafından
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>
                         </div>
                     </div>
@@ -149,8 +209,7 @@
             </div>
         </div>
     </footer>
-    <!-- Footer Bitiş -->
-
+    <!-- Footer Section End -->
     <!-- Search model Begin -->
     <div class="search-model">
         <div class="h-100 d-flex align-items-center justify-content-center">
@@ -161,7 +220,6 @@
         </div>
     </div>
     <!-- Search model end -->
-
     <!-- Js Plugins -->
     <script src="~/sona-master/js/jquery-3.3.1.min.js"></script>
     <script src="~/sona-master/js/bootstrap.min.js"></script>
