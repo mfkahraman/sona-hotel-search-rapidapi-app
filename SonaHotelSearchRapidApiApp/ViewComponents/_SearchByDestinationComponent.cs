@@ -2,7 +2,7 @@
 
 namespace SonaHotelSearchRapidApiApp.ViewComponents
 {
-    public class _HotelSearchComponent : ViewComponent
+    public class _SearchByDestinationComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

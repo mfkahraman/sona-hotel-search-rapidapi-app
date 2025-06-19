@@ -42,6 +42,35 @@ namespace SonaHotelSearchRapidApiApp.Controllers
             return View(values);
         }
 
+        [HttpGet]
+        public IActionResult SearchByDestination()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> HotelsByDestination(string destination)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query={destination}"),
+                Headers =
+                {
+                    { "x-rapidapi-key", "9b063ae1d3msh4540ffaa7b69c52p16e4b6jsn1a9e5d81098b" },
+                    { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
+                },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var deserializedValues = JsonConvert.DeserializeObject<DestinationSearchModel.Rootobject>(body);
+                var values = deserializedValues.data.ToList();
+                return View(values);
+            }
+
+        }
     }
 }
